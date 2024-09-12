@@ -1,132 +1,81 @@
-def word_with_longest_length(s):
-    max_len = 0
-    longest_word = ""
-    current_word = ""
-    
-    for char in s + ' ':
-        if char != ' ':
-            current_word += char
-        else:
-            if len(current_word) > max_len:
-                max_len = len(current_word)
-                longest_word = current_word
-            current_word = ""
-    
-    return longest_word
+# Experiment Number 2 : Write a python program to store marks stored in subject "Fundamentals of Data Structure" by
+#                          N students in the class. Write functions to compute following:
+#                          1. The average score of the class.
+#                          2. Highest score and lowest score of the class.
+#                          3. Count of students who were absent for the test.
+#                          4. Display mark with highest frequency.
 
-def frequency_of_character(s, char):
+def menu():
+    L = []
+    n = int(input("Enter the number of students = "))
+    for i in range(n):
+        a = int(input("\nEnter the marks of student(<30,-1 if absent) "+ str(i+1) + ": "))
+        while a>30:
+            a = int(input("\nInvalid marks\nEnter valid marks(below 30,-1 if absent): "))
+        L.append(a)
+    f = 0
+    while f == 0:
+        print("\n----------------------MENU-----------------------")
+        print("\n1.Average\n2.Maximum and Minimum\n3.Number of absent students\n4.Highest frequency\n5.Quit")
+        ch = int(input("\nChoose your option number = "))
+        while ch>5 or ch<1:
+            ch = int(input("\nEnter valid option number = "))
+        if ch == 1:
+            average(L)
+        elif ch == 2:
+            maxmin(L)
+        elif ch == 3:
+            absent(L)
+        elif ch == 4:
+            highf(L)
+        elif ch == 5:
+            f = 1
+            break
+        yn = input("\nDo you want to continue(yes or no)? : ")
+        if yn == "no":
+            break
+
+def average(L):
+    sum1 = 0
     count = 0
-    for c in s:
-        if c == char:
+    for i in L:
+        if i != -1:
+            sum1 += i
             count += 1
-    return count
+    print("\nAverage result: ",sum1/count)
 
-def is_palindrome(s):
-    cleaned_s = ""
-    for char in s:
-        if char != ' ':
-            cleaned_s += char.lower()
-    
-    left, right = 0, len(cleaned_s) - 1
-    while left < right:
-        if cleaned_s[left] != cleaned_s[right]:
-            return False
-        left += 1
-        right -= 1
-    
-    return True
+def maxmin(L):
+    max1 = -2
+    min1 = 31
+    for i in L:
+        if i != -1:
+            if i > max1:
+                max1 = i
+            if i < min1:
+                min1 = i
+    print("\nMaximum = ",max1,"\tMinimum = ",min1)
 
-def index_of_first_substring(s, substring):
-    n = len(s)
-    m = len(substring)
-    
-    for i in range(n - m + 1):
-        match = True
-        for j in range(m):
-            if s[i + j] != substring[j]:
-                match = False
-                break
-        if match:
-            return i
-    
-    return -1
+def absent(L):
+    count = 0
+    for i in L:
+        if i == -1:
+            count += 1
+    print("\nNumber of absent students = ",count)
 
-def count_word_occurrences(s):
-    word_count = {}
-    current_word = ""
-    
-    for char in s + ' ':
-        if char != ' ':
-            current_word += char.lower()
-        else:
-            if current_word in word_count:
-                word_count[current_word] += 1
-            else:
-                word_count[current_word] = 1
-            current_word = ""
-    
-    return word_count
-
-# Example usage:
-string = input("Enter Your String : ")
-
-flag=1
-while flag==1:
-    print("1. To display word with the longest length")
-    print("2. To determines the frequency of occurrence of particular character in the string")
-    print("3. To check whether given string is palindrome or not ")
-    print("4. To display index of first appearance of the substring")
-    print("5. To count the occurrences of each word in a given string")
-    print("6. EXIT")
-    ch=int(input("enter your choice: "))
-    if ch==1:
-        print("Word with the longest length:", word_with_longest_length(string))
-        m=input(" Do you want to continue:(YES/NO): ")
-        if m=='yes':
-            flag=1
-        else:
-            flag=0
-    
-    elif ch==2:
-        s= input("enter Charactor to find frequency : ")
-        print("Frequency of :",s,frequency_of_character(string, s))
-        m=input(" Do you want to continue:(YES/NO): ")
-        if m=='yes':
-            flag=1
-        else:
-            flag=0
-    elif ch==3:
-        print("Is the string a palindrome?", is_palindrome(string))
-        m=input(" Do you want to continue:(YES/NO): ")
-        if m=='yes':
-            flag=1
-        else:
-            flag=0
-    elif ch==4:
-        substring=input("enter substring ")
-        print("Index of first appearance of substring: ", index_of_first_substring(string,substring ))
-        m=input(" Do you want to continue:(YES/NO): ")
-        if m=='yes':
-            flag=1
-        else:
-            flag=0
-    elif ch==5:
-        print("Word occurrences: ", count_word_occurrences(string))
-        m=input(" Do you want to continue:(YES/NO): ")
-        if m=='yes':
-            flag=1
-        else:
-            flag=0
-            
-    elif ch==6:
-        print("exit")
-        flag=0
-    else:
-        print("invalid choice")
-    
-    
-
-
-
-
-
+def highf(L):
+    dict1 = {}
+    for i in L:
+        if i == -1:
+            L.remove(-1)
+    for i in range(0,len(L),1):
+        if L[i] not in dict1:
+            dict1[L[i]] = 1
+        else :
+            dict1[L[i]] += 1
+    freq = list(dict1.values())
+    marks = list(dict1.keys())
+    max1 = max(freq)
+    for i in range(0,len(marks),1):
+        if freq[i] == max1:
+            print("\nHighest Frequency Marks = ",marks[i],"\tFrequency = ",freq[i])
+menu()

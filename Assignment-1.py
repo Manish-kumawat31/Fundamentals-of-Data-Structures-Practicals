@@ -1,74 +1,108 @@
-def menu():
-    L = []
-    n = int(input("Enter the number of students = "))
-    for i in range(n):
-        a = int(input("\nEnter the marks of student(<30,-1 if absent) "+ str(i+1) + ": "))
-        while a>30:
-            a = int(input("\nInvalid marks\nEnter valid marks(below 30,-1 if absent): "))
-        L.append(a)
-    f = 0
-    while f == 0:
-        print("\n----------------------MENU-----------------------")
-        print("\n1.Average\n2.Maximum and Minimum\n3.Number of absent students\n4.Highest frequency\n5.Quit")
-        ch = int(input("\nChoose your option number = "))
-        while ch>5 or ch<1:
-            ch = int(input("\nEnter valid option number = "))
-        if ch == 1:
-            average(L)
-        elif ch == 2:
-            maxmin(L)
-        elif ch == 3:
-            absent(L)
-        elif ch == 4:
-            highf(L)
-        elif ch == 5:
-            f = 1
-            break
-        yn = input("\nDo you want to continue(yes or no)? : ")
-        if yn == "no":
-            break
+# Experiment No. 1 : In a second year computer engineering class, group A students play cricket, group B students play
+#                    badminton and group C students play football.
+#                    Write a python program using functions to compute following:
+#                    a) List of students who play both cricket and badminton.
+#                    b) List of students who play either cricket or badminton but not both.
+#                    c) Number of students who play neither cricket nor badminton.
+#                    d) Number of students who play cricket and football but not badminton.
+# (NOTE : While realising the group, duplicate entries should be avoided. Do not use SET built-in functions)
 
-def average(L):
-    sum1 = 0
-    count = 0
-    for i in L:
-        if i != -1:
-            sum1 += i
-            count += 1
-    print("\nAverage result: ",sum1/count)
+c=[]
+b=[]
+f=[]
 
-def maxmin(L):
-    max1 = -2
-    min1 = 31
-    for i in L:
-        if i != -1:
-            if i > max1:
-                max1 = i
-            if i < min1:
-                min1 = i
-    print("\nMaximum = ",max1,"\tMinimum = ",min1)
+c1=int(input("enter number of student who play cricket"))
+i=1
+while(i<=c1):
+	roll=int(input("enter Roll numbers:"))
+	if roll not in c:
+		c.append(roll)
+		i+=1
+	else:
+		pass
+b1=int(input("enter number of student who play badminton"))
+j=1
+while(j<=b1):
+	roll=int(input("enter Roll numbers:"))
+	if roll not in b:
+		b.append(roll)
+		j+=1
+	else:
+		pass
+f1=int(input("enter number of student who play football"))
+k=1
+while(k<=f1):
+	roll=int(input("enter Roll numbers:"))
+	if roll not in f:
+		f.append(roll)
+		k+=1
+	else:
+		pass
 
-def absent(L):
-    count = 0
-    for i in L:
-        if i == -1:
-            count += 1
-    print("\nNumber of absent students = ",count)
+u=[]
+def union(l1,l2):
+	for i in l1:
+		u.append(i)
+	for j in l2:
+		if j not in l1:
+			u.append(j)
+	return u
 
-def highf(L):
-    dict1 = {}
-    for i in L:
-        if i == -1:
-            L.remove(-1)
-    for i in range(0,len(L),1):
-        if L[i] not in dict1:
-            dict1[L[i]] = 1
-        else :
-            dict1[L[i]] += 1
-    freq = list(dict1.values())
-    marks = list(dict1.keys())
-    max1 = max(freq)
-    for i in range(0,len(marks),1):
-        if freq[i] == max1:
-            print("\nHighest Frequency Marks = ",marks[i],"\tFrequency = ",freq[i])
-menu()
+inter=[]
+def intersection(l1,l2):
+	for i in l1:
+		if i in l2:
+			inter.append(i)
+	return inter
+	
+diff=[]
+def differance(l1,l2):
+	for i in l1:
+		if i not in l2:
+			diff.append(i)
+	return diff
+	
+
+choice='y'
+while(choice!='n'):
+	print('''Enter choice:
+	1) List of students who play both cricket and badminton
+	2) List of students who play either cricket or badminton but not both
+	3) Number of students who play neither cricket nor badminton
+	4) Number of students who play cricket and football but not badminton''')
+	ch=int(input())
+	match ch:
+		case 1:
+			u.clear()
+			inter.clear()
+			diff.clear()
+			inter=intersection(c,b)
+			print(inter)
+		case 2:
+			u.clear()
+			inter.clear()
+			diff.clear()
+			union=union(c,b)
+			inter=intersection(c,b)
+			print(differance(union,inter))
+		case 3:
+			u.clear()
+			inter.clear()
+			diff.clear()
+			unionRes=union(c,b)
+			print(differance(f,unionRes))
+		case 4:
+			u.clear()
+			inter.clear()
+			diff.clear()
+			inter=intersection(c,f)
+			print(differance(inter,b))
+	print('Do you want to continue(y/n):')
+	choice=input()
+		
+
+
+
+
+			
+		
